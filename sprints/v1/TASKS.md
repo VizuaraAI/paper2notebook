@@ -12,9 +12,10 @@
   - Files: app/page.tsx, components/api-key-input.tsx, lib/api-key-context.tsx
   - Completed: 2026-03-25 — Landing page with hero, API key input (masked + toggle), context provider, step-based flow. 4 E2E tests passing.
 
-- [ ] Task 3: Build the PDF upload interface with drag-and-drop (P0)
+- [x] Task 3: Build the PDF upload interface with drag-and-drop (P0)
   - Acceptance: Drag-and-drop zone with visual feedback (border highlight on drag-over). Click-to-browse fallback. Accepts only .pdf files, max 20MB. Shows file name, size after selection. "Generate Notebook" button appears after file is selected. Clean, minimal design consistent with landing page.
   - Files: components/pdf-upload.tsx, app/page.tsx (update to show upload after API key)
+  - Completed: 2026-03-25 — Drag-and-drop + click-to-browse, file preview with clear, validation. 4 E2E tests passing.
 
 - [ ] Task 4: Implement PDF parsing API route (P0)
   - Acceptance: POST `/api/parse` accepts a PDF file upload (multipart/form-data). Uses `pdf-parse` to extract full text content. Returns JSON with `{ text, title, numPages, metadata }`. Handles errors gracefully (corrupt PDF, empty PDF, too large). Zod validation on input.
