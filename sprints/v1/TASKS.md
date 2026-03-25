@@ -7,9 +7,10 @@
   - Files: package.json, tailwind.config.ts, app/layout.tsx, app/globals.css, app/page.tsx, components.json
   - Completed: 2026-03-25 — Next.js 14 + Tailwind v3 + shadcn/ui (default style) + Inter/JetBrains Mono. ARC Prize off-white aesthetic. 3 E2E tests passing.
 
-- [ ] Task 2: Build the landing page with API key input (P0)
+- [x] Task 2: Build the landing page with API key input (P0)
   - Acceptance: Hero section with app title "Paper2Notebook", tagline, and description. API key input field (password-masked, with show/hide toggle). Key is stored in React context/state and persists across page interactions. "Continue" button enabled only when key is entered. ARC Prize-inspired typography and spacing.
   - Files: app/page.tsx, components/api-key-input.tsx, lib/api-key-context.tsx
+  - Completed: 2026-03-25 — Landing page with hero, API key input (masked + toggle), context provider, step-based flow. 4 E2E tests passing.
 
 - [ ] Task 3: Build the PDF upload interface with drag-and-drop (P0)
   - Acceptance: Drag-and-drop zone with visual feedback (border highlight on drag-over). Click-to-browse fallback. Accepts only .pdf files, max 20MB. Shows file name, size after selection. "Generate Notebook" button appears after file is selected. Clean, minimal design consistent with landing page.
