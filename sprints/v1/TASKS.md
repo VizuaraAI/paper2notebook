@@ -1,6 +1,6 @@
 # Sprint v1 — Tasks
 
-## Status: In Progress
+## Status: Complete
 
 - [x] Task 1: Initialize Next.js 14 project with Tailwind CSS, shadcn/ui, and fonts (P0)
   - Acceptance: `npm run dev` starts without errors. Tailwind works. Inter + JetBrains Mono fonts loaded. shadcn/ui initialized with dark-neutral theme. Base layout matches ARC Prize aesthetic (off-white bg, centered content, generous spacing).
@@ -47,6 +47,7 @@
   - Files: app/page.tsx (orchestration update), lib/app-state.ts
   - Completed: 2026-03-25 — Full E2E flow with inline error states, retry buttons, parse error handling. 3 E2E tests passing.
 
-- [ ] Task 10: UI polish — responsive design, animations, edge cases (P1)
+- [x] Task 10: UI polish — responsive design, animations, edge cases (P1)
   - Acceptance: Works on desktop (1024px+) and tablet (768px+). Mobile shows a "best on desktop" note but still functions. Subtle fade-in animations on section transitions. Loading states have skeleton/pulse animations. Error toasts use shadcn/ui toast component. Empty states are handled. Overall feel matches ARC Prize: calm, confident, research-grade aesthetic.
   - Files: various component updates, app/globals.css updates
+  - Completed: 2026-03-25 — Responsive breakpoints (sm:), fadeIn/slideUp CSS animations, mobile "best on desktop" note. Fixed flaky test fixture (task3 was overwriting with invalid PDF). All 38 tests passing (23 Playwright + 15 Vitest).

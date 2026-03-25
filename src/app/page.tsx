@@ -42,7 +42,9 @@ export default function Home() {
         });
 
         if (!parseRes.ok) {
-          const err = await parseRes.json().catch(() => ({ error: "Failed to parse PDF" }));
+          const err = await parseRes
+            .json()
+            .catch(() => ({ error: "Failed to parse PDF" }));
           generation.reset();
           setParseError(err.error || "Failed to parse PDF");
           setStep("upload");
@@ -55,7 +57,9 @@ export default function Home() {
         await generation.generate(parsed.text, apiKey, parsed.title);
       } catch {
         generation.reset();
-        setParseError("Network error. Please check your connection and try again.");
+        setParseError(
+          "Network error. Please check your connection and try again."
+        );
         setStep("upload");
       }
     },
@@ -69,20 +73,24 @@ export default function Home() {
   }, [handleGenerate]);
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center px-6">
+    <main className="flex min-h-screen flex-col items-center justify-center px-4 sm:px-6 py-12">
       <div className="w-full max-w-2xl flex flex-col items-center space-y-8">
-        <div className="text-center space-y-4">
-          <h1 className="text-5xl font-bold tracking-tight text-foreground">
+        <div className="text-center space-y-3 sm:space-y-4 animate-fade-in">
+          <h1 className="text-4xl sm:text-5xl font-bold tracking-tight text-foreground">
             Paper2Notebook
           </h1>
-          <p className="text-lg text-muted-foreground max-w-md mx-auto">
+          <p className="text-base sm:text-lg text-muted-foreground max-w-md mx-auto leading-relaxed">
             Transform research papers into production-quality Google Colab
             notebooks.
           </p>
         </div>
 
+        <div className="block sm:hidden text-xs text-muted-foreground/60 text-center">
+          Best experienced on desktop
+        </div>
+
         {step === "api-key" && (
-          <div className="w-full flex flex-col items-center space-y-6 pt-4">
+          <div className="w-full flex flex-col items-center space-y-6 pt-4 animate-slide-up">
             <div className="text-center space-y-1">
               <h2 className="text-sm font-medium text-foreground">
                 Enter your OpenAI API Key
@@ -98,7 +106,7 @@ export default function Home() {
         {step === "upload" && (
           <div
             data-testid="upload-step"
-            className="w-full flex flex-col items-center space-y-6 pt-4"
+            className="w-full flex flex-col items-center space-y-6 pt-4 animate-slide-up"
           >
             <div className="text-center space-y-1">
               <h2 className="text-sm font-medium text-foreground">
@@ -112,7 +120,7 @@ export default function Home() {
             {parseError && (
               <div
                 data-testid="parse-error"
-                className="w-full max-w-md flex items-start gap-2 rounded-lg border border-destructive/20 bg-destructive/5 p-3"
+                className="w-full max-w-md flex items-start gap-2 rounded-lg border border-destructive/20 bg-destructive/5 p-3 animate-fade-in"
               >
                 <AlertCircle className="h-4 w-4 mt-0.5 shrink-0 text-destructive" />
                 <p className="text-sm text-destructive">{parseError}</p>
@@ -126,11 +134,11 @@ export default function Home() {
         {step === "generating" && (
           <div
             data-testid="generating-step"
-            className="w-full flex flex-col items-center pt-4"
+            className="w-full flex flex-col items-center pt-4 animate-slide-up"
           >
             <GenerationProgress messages={generation.messages} />
             {generation.error && (
-              <div className="mt-6 flex flex-col items-center gap-3">
+              <div className="mt-6 flex flex-col items-center gap-3 animate-fade-in">
                 <div className="flex items-start gap-2 rounded-lg border border-destructive/20 bg-destructive/5 p-3 max-w-md">
                   <AlertCircle className="h-4 w-4 mt-0.5 shrink-0 text-destructive" />
                   <p className="text-sm text-destructive">
@@ -154,7 +162,7 @@ export default function Home() {
         {step === "results" && generation.notebookJson && (
           <div
             data-testid="results-step"
-            className="w-full flex flex-col items-center pt-4"
+            className="w-full flex flex-col items-center pt-4 animate-slide-up"
           >
             <ResultsView
               notebookJson={generation.notebookJson}

@@ -4,7 +4,15 @@ import path from "path";
 
 const FIXTURES_DIR = path.join(__dirname, "..", "fixtures");
 
+test.describe.configure({ mode: "serial" });
 test.describe("Task 4: PDF Parse API", () => {
+  test("warm up parse route", async ({ request }) => {
+    // Hit the route once to trigger compilation
+    await request.post("http://localhost:3000/api/parse", {
+      multipart: { other: "warmup" },
+    });
+  });
+
   test("parses a valid PDF and returns text", async ({ request }) => {
     const pdfBuffer = fs.readFileSync(
       path.join(FIXTURES_DIR, "test-paper.pdf")
