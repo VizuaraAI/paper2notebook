@@ -22,9 +22,10 @@
   - Files: app/api/parse/route.ts, lib/pdf-parser.ts
   - Completed: 2026-03-25 — pdf-parse v1 with serverComponentsExternalPackages. 3 integration tests passing.
 
-- [ ] Task 5: Build the notebook generation prompt engineering (P0)
+- [x] Task 5: Build the notebook generation prompt engineering (P0)
   - Acceptance: A prompt builder function that takes extracted paper text and constructs a detailed system + user prompt for gpt-5.4. Prompt instructs the model to output structured JSON matching .ipynb format. Includes all notebook sections (setup, theory, implementation, synthetic data, experiments, analysis). Prompt emphasizes research-grade quality, not toy examples.
   - Files: lib/prompt-builder.ts, lib/notebook-types.ts
+  - Completed: 2026-03-25 — Prompt builder with 10-section structure, 30k char truncation, JSON output format. 7 unit tests passing.
 
 - [ ] Task 6: Implement streaming notebook generation API route (P0)
   - Acceptance: POST `/api/generate` accepts `{ text, apiKey }`. Calls OpenAI gpt-5.4 with streaming enabled. Streams progress messages to the client using Server-Sent Events (SSE). Progress messages include: "Analyzing paper structure...", "Identifying key algorithms...", "Generating implementation code...", "Creating synthetic datasets...", "Assembling notebook...". On completion, returns the full .ipynb JSON. Handles OpenAI errors (invalid key, rate limit, timeout).
