@@ -27,9 +27,10 @@
   - Files: lib/prompt-builder.ts, lib/notebook-types.ts
   - Completed: 2026-03-25 — Prompt builder with 10-section structure, 30k char truncation, JSON output format. 7 unit tests passing.
 
-- [ ] Task 6: Implement streaming notebook generation API route (P0)
+- [x] Task 6: Implement streaming notebook generation API route (P0)
   - Acceptance: POST `/api/generate` accepts `{ text, apiKey }`. Calls OpenAI gpt-5.4 with streaming enabled. Streams progress messages to the client using Server-Sent Events (SSE). Progress messages include: "Analyzing paper structure...", "Identifying key algorithms...", "Generating implementation code...", "Creating synthetic datasets...", "Assembling notebook...". On completion, returns the full .ipynb JSON. Handles OpenAI errors (invalid key, rate limit, timeout).
   - Files: app/api/generate/route.ts, lib/openai-client.ts, lib/notebook-assembler.ts
+  - Completed: 2026-03-25 — SSE streaming endpoint, OpenAI client wrapper, notebook assembler. 15 unit tests passing (8 new for assembler).
 
 - [ ] Task 7: Build the generation progress UI with streaming text display (P0)
   - Acceptance: After clicking "Generate Notebook", the UI transitions to a progress view. Shows an animated progress indicator (subtle pulse/spinner). Displays streaming status messages from the backend in real-time with typewriter-style fade-in. Messages appear sequentially as SSE events arrive. Looks polished and keeps user engaged during the 30-60s generation time.
