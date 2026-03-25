@@ -37,9 +37,10 @@
   - Files: components/generation-progress.tsx, hooks/use-generation-stream.ts
   - Completed: 2026-03-25 — Progress component with spinner, streaming messages, progress bar. SSE hook. Full page integration. 1 E2E test passing.
 
-- [ ] Task 8: Build the results page with download and "Open in Colab" (P0)
+- [x] Task 8: Build the results page with download and "Open in Colab" (P0)
   - Acceptance: After generation completes, shows a success state with notebook preview (title, section count, estimated cells). "Download .ipynb" button triggers browser download with proper filename (based on paper title). "Open in Google Colab" button uploads notebook as a GitHub Gist and opens `colab.research.google.com/gist/{id}`. If Gist upload fails, gracefully falls back to download-only with a tooltip explaining how to open in Colab manually.
   - Files: components/results-view.tsx, lib/gist-uploader.ts, app/api/gist/route.ts
+  - Completed: 2026-03-25 — Results view with notebook preview, download, Colab via Gist, reset flow. 4 E2E tests passing.
 
 - [ ] Task 9: Wire up the full end-to-end flow with state management (P1)
   - Acceptance: Complete user journey works: enter API key → upload PDF → see progress → download/open notebook. State transitions are smooth (no flickers, no broken states). Error states handled at every step (network error, API error, PDF parse error) with user-friendly messages and retry options. Back navigation works (can upload another PDF without re-entering API key).

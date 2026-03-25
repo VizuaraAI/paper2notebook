@@ -4,6 +4,7 @@ import { useState, useCallback } from "react";
 import { ApiKeyInput } from "@/components/api-key-input";
 import { PdfUpload } from "@/components/pdf-upload";
 import { GenerationProgress } from "@/components/generation-progress";
+import { ResultsView } from "@/components/results-view";
 import { useApiKey } from "@/lib/api-key-context";
 import { useGenerationStream } from "@/hooks/use-generation-stream";
 
@@ -111,9 +112,19 @@ export default function Home() {
           </div>
         )}
 
-        {step === "results" && (
-          <div data-testid="results-step" className="text-muted-foreground">
-            Results: {paperTitle}
+        {step === "results" && generation.notebookJson && (
+          <div
+            data-testid="results-step"
+            className="w-full flex flex-col items-center pt-4"
+          >
+            <ResultsView
+              notebookJson={generation.notebookJson}
+              paperTitle={paperTitle}
+              onReset={() => {
+                generation.reset();
+                setStep("upload");
+              }}
+            />
           </div>
         )}
       </div>
