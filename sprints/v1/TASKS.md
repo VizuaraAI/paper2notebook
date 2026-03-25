@@ -32,9 +32,10 @@
   - Files: app/api/generate/route.ts, lib/openai-client.ts, lib/notebook-assembler.ts
   - Completed: 2026-03-25 — SSE streaming endpoint, OpenAI client wrapper, notebook assembler. 15 unit tests passing (8 new for assembler).
 
-- [ ] Task 7: Build the generation progress UI with streaming text display (P0)
+- [x] Task 7: Build the generation progress UI with streaming text display (P0)
   - Acceptance: After clicking "Generate Notebook", the UI transitions to a progress view. Shows an animated progress indicator (subtle pulse/spinner). Displays streaming status messages from the backend in real-time with typewriter-style fade-in. Messages appear sequentially as SSE events arrive. Looks polished and keeps user engaged during the 30-60s generation time.
   - Files: components/generation-progress.tsx, hooks/use-generation-stream.ts
+  - Completed: 2026-03-25 — Progress component with spinner, streaming messages, progress bar. SSE hook. Full page integration. 1 E2E test passing.
 
 - [ ] Task 8: Build the results page with download and "Open in Colab" (P0)
   - Acceptance: After generation completes, shows a success state with notebook preview (title, section count, estimated cells). "Download .ipynb" button triggers browser download with proper filename (based on paper title). "Open in Google Colab" button uploads notebook as a GitHub Gist and opens `colab.research.google.com/gist/{id}`. If Gist upload fails, gracefully falls back to download-only with a tooltip explaining how to open in Colab manually.
