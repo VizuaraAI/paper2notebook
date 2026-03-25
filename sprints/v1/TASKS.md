@@ -17,9 +17,10 @@
   - Files: components/pdf-upload.tsx, app/page.tsx (update to show upload after API key)
   - Completed: 2026-03-25 — Drag-and-drop + click-to-browse, file preview with clear, validation. 4 E2E tests passing.
 
-- [ ] Task 4: Implement PDF parsing API route (P0)
+- [x] Task 4: Implement PDF parsing API route (P0)
   - Acceptance: POST `/api/parse` accepts a PDF file upload (multipart/form-data). Uses `pdf-parse` to extract full text content. Returns JSON with `{ text, title, numPages, metadata }`. Handles errors gracefully (corrupt PDF, empty PDF, too large). Zod validation on input.
   - Files: app/api/parse/route.ts, lib/pdf-parser.ts
+  - Completed: 2026-03-25 — pdf-parse v1 with serverComponentsExternalPackages. 3 integration tests passing.
 
 - [ ] Task 5: Build the notebook generation prompt engineering (P0)
   - Acceptance: A prompt builder function that takes extracted paper text and constructs a detailed system + user prompt for gpt-5.4. Prompt instructs the model to output structured JSON matching .ipynb format. Includes all notebook sections (setup, theory, implementation, synthetic data, experiments, analysis). Prompt emphasizes research-grade quality, not toy examples.
