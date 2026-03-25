@@ -1,10 +1,11 @@
 # Sprint v1 — Tasks
 
-## Status: Not Started
+## Status: In Progress
 
-- [ ] Task 1: Initialize Next.js 14 project with Tailwind CSS, shadcn/ui, and fonts (P0)
+- [x] Task 1: Initialize Next.js 14 project with Tailwind CSS, shadcn/ui, and fonts (P0)
   - Acceptance: `npm run dev` starts without errors. Tailwind works. Inter + JetBrains Mono fonts loaded. shadcn/ui initialized with dark-neutral theme. Base layout matches ARC Prize aesthetic (off-white bg, centered content, generous spacing).
   - Files: package.json, tailwind.config.ts, app/layout.tsx, app/globals.css, app/page.tsx, components.json
+  - Completed: 2026-03-25 — Next.js 14 + Tailwind v3 + shadcn/ui (default style) + Inter/JetBrains Mono. ARC Prize off-white aesthetic. 3 E2E tests passing.
 
 - [ ] Task 2: Build the landing page with API key input (P0)
   - Acceptance: Hero section with app title "Paper2Notebook", tagline, and description. API key input field (password-masked, with show/hide toggle). Key is stored in React context/state and persists across page interactions. "Continue" button enabled only when key is entered. ARC Prize-inspired typography and spacing.
