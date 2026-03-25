@@ -42,9 +42,10 @@
   - Files: components/results-view.tsx, lib/gist-uploader.ts, app/api/gist/route.ts
   - Completed: 2026-03-25 — Results view with notebook preview, download, Colab via Gist, reset flow. 4 E2E tests passing.
 
-- [ ] Task 9: Wire up the full end-to-end flow with state management (P1)
+- [x] Task 9: Wire up the full end-to-end flow with state management (P1)
   - Acceptance: Complete user journey works: enter API key → upload PDF → see progress → download/open notebook. State transitions are smooth (no flickers, no broken states). Error states handled at every step (network error, API error, PDF parse error) with user-friendly messages and retry options. Back navigation works (can upload another PDF without re-entering API key).
   - Files: app/page.tsx (orchestration update), lib/app-state.ts
+  - Completed: 2026-03-25 — Full E2E flow with inline error states, retry buttons, parse error handling. 3 E2E tests passing.
 
 - [ ] Task 10: UI polish — responsive design, animations, edge cases (P1)
   - Acceptance: Works on desktop (1024px+) and tablet (768px+). Mobile shows a "best on desktop" note but still functions. Subtle fade-in animations on section transitions. Loading states have skeleton/pulse animations. Error toasts use shadcn/ui toast component. Empty states are handled. Overall feel matches ARC Prize: calm, confident, research-grade aesthetic.

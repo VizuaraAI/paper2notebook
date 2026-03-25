@@ -1,10 +1,12 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
+import { AlertCircle, RotateCcw } from "lucide-react";
 import { ApiKeyInput } from "@/components/api-key-input";
 import { PdfUpload } from "@/components/pdf-upload";
 import { GenerationProgress } from "@/components/generation-progress";
 import { ResultsView } from "@/components/results-view";
+import { Button } from "@/components/ui/button";
 import { useApiKey } from "@/lib/api-key-context";
 import { useGenerationStream } from "@/hooks/use-generation-stream";
 
@@ -13,11 +15,21 @@ type AppStep = "api-key" | "upload" | "generating" | "results";
 export default function Home() {
   const [step, setStep] = useState<AppStep>("api-key");
   const [paperTitle, setPaperTitle] = useState("");
+  const [parseError, setParseError] = useState<string | null>(null);
+  const lastFileRef = useRef<File | null>(null);
   const { apiKey } = useApiKey();
   const generation = useGenerationStream();
 
+  useEffect(() => {
+    if (generation.status === "complete" && step === "generating") {
+      setStep("results");
+    }
+  }, [generation.status, step]);
+
   const handleGenerate = useCallback(
     async (file: File) => {
+      lastFileRef.current = file;
+      setParseError(null);
       setStep("generating");
 
       const formData = new FormData();
@@ -30,10 +42,10 @@ export default function Home() {
         });
 
         if (!parseRes.ok) {
-          const err = await parseRes.json();
+          const err = await parseRes.json().catch(() => ({ error: "Failed to parse PDF" }));
           generation.reset();
+          setParseError(err.error || "Failed to parse PDF");
           setStep("upload");
-          alert(err.error || "Failed to parse PDF");
           return;
         }
 
@@ -43,16 +55,18 @@ export default function Home() {
         await generation.generate(parsed.text, apiKey, parsed.title);
       } catch {
         generation.reset();
+        setParseError("Network error. Please check your connection and try again.");
         setStep("upload");
-        alert("Failed to process PDF. Please try again.");
       }
     },
     [apiKey, generation]
   );
 
-  if (generation.status === "complete" && step === "generating") {
-    setStep("results");
-  }
+  const handleRetry = useCallback(() => {
+    if (lastFileRef.current) {
+      handleGenerate(lastFileRef.current);
+    }
+  }, [handleGenerate]);
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center px-6">
@@ -94,6 +108,17 @@ export default function Home() {
                 We&apos;ll extract the methodology and generate a notebook
               </p>
             </div>
+
+            {parseError && (
+              <div
+                data-testid="parse-error"
+                className="w-full max-w-md flex items-start gap-2 rounded-lg border border-destructive/20 bg-destructive/5 p-3"
+              >
+                <AlertCircle className="h-4 w-4 mt-0.5 shrink-0 text-destructive" />
+                <p className="text-sm text-destructive">{parseError}</p>
+              </div>
+            )}
+
             <PdfUpload onGenerate={handleGenerate} />
           </div>
         )}
@@ -105,8 +130,22 @@ export default function Home() {
           >
             <GenerationProgress messages={generation.messages} />
             {generation.error && (
-              <div className="mt-4 text-sm text-destructive">
-                {generation.error}
+              <div className="mt-6 flex flex-col items-center gap-3">
+                <div className="flex items-start gap-2 rounded-lg border border-destructive/20 bg-destructive/5 p-3 max-w-md">
+                  <AlertCircle className="h-4 w-4 mt-0.5 shrink-0 text-destructive" />
+                  <p className="text-sm text-destructive">
+                    {generation.error}
+                  </p>
+                </div>
+                <Button
+                  data-testid="retry-button"
+                  variant="outline"
+                  size="sm"
+                  onClick={handleRetry}
+                >
+                  <RotateCcw className="mr-2 h-3 w-3" />
+                  Retry
+                </Button>
               </div>
             )}
           </div>
@@ -122,6 +161,7 @@ export default function Home() {
               paperTitle={paperTitle}
               onReset={() => {
                 generation.reset();
+                setParseError(null);
                 setStep("upload");
               }}
             />
