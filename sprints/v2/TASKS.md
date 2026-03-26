@@ -42,9 +42,10 @@
   - Files: src/lib/history-context.tsx, src/components/history-drawer.tsx, src/app/layout.tsx, src/app/page.tsx, tests/e2e/task-history.spec.ts
   - Completed: 2026-03-26 — HistoryProvider context, HistoryDrawer with Sheet, auto-add on generation, History button in header. 2 E2E tests passing.
 
-- [ ] Task 9: Add JSON.parse error boundary in ResultsView (P1)
+- [x] Task 9: Add JSON.parse error boundary in ResultsView (P1)
   - Acceptance: `JSON.parse(notebookJson)` in ResultsView is wrapped in try/catch. If parsing fails, shows a user-friendly error message with download-raw option instead of white screen crash. Unit or E2E test verifies graceful handling.
   - Files: src/components/results-view.tsx
+  - Completed: 2026-03-26 — parseNotebook with try/catch, error state shows warning + download-raw button. 5 unit tests passing.
 
 - [ ] Task 10: Run full test suite, lint, typecheck, and final security verification (P1)
   - Acceptance: All Playwright tests pass (including new security tests). All Vitest unit tests pass. `npx next lint` shows zero warnings. `npx tsc --noEmit` has no errors. Manual verification that security headers are present, rate limiting works, and prompt injection defenses are in place. TASKS.md updated to mark all tasks complete.
