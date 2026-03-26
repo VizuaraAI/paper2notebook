@@ -48,6 +48,14 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    const header = buffer.slice(0, 5).toString("ascii");
+    if (header !== "%PDF-") {
+      return NextResponse.json(
+        { error: "File is not a valid PDF" },
+        { status: 400 }
+      );
+    }
+
     const result = await parsePdf(buffer);
 
     if (!result.text || result.text.trim().length === 0) {
@@ -58,11 +66,9 @@ export async function POST(request: NextRequest) {
     }
 
     return NextResponse.json(result);
-  } catch (error) {
-    const message =
-      error instanceof Error ? error.message : "Failed to parse PDF";
+  } catch {
     return NextResponse.json(
-      { error: `PDF parsing failed: ${message}` },
+      { error: "Failed to parse PDF. Please try a different file." },
       { status: 500 }
     );
   }

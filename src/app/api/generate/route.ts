@@ -6,9 +6,9 @@ import { assembleNotebook } from "@/lib/notebook-assembler";
 import { apiRateLimiter } from "@/lib/rate-limiter";
 
 const requestSchema = z.object({
-  text: z.string().min(1, "Paper text is required"),
-  apiKey: z.string().min(1, "API key is required"),
-  title: z.string().default("Research Paper"),
+  text: z.string().min(1, "Paper text is required").max(100000, "Paper text exceeds maximum length"),
+  apiKey: z.string().min(1, "API key is required").max(200, "API key exceeds maximum length"),
+  title: z.string().max(500, "Title exceeds maximum length").default("Research Paper"),
 });
 
 export async function POST(request: NextRequest) {
