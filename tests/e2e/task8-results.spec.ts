@@ -81,13 +81,6 @@ test.describe("Task 8: Results View", () => {
     await expect(downloadBtn).toContainText("Download .ipynb");
   });
 
-  test("colab button is visible", async ({ page }) => {
-    await navigateToResults(page);
-    const colabBtn = page.getByTestId("colab-button");
-    await expect(colabBtn).toBeVisible();
-    await expect(colabBtn).toContainText("Open in Google Colab");
-  });
-
   test("new paper button resets to upload", async ({ page }) => {
     await navigateToResults(page);
     await page.getByTestId("new-paper-button").click();

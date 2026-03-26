@@ -1,9 +1,8 @@
 "use client";
 
-import { useState, useCallback } from "react";
-import { Download, ExternalLink, CheckCircle, RotateCcw } from "lucide-react";
+import { useCallback } from "react";
+import { Download, CheckCircle, RotateCcw } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { uploadToGist } from "@/lib/gist-uploader";
 
 interface ResultsViewProps {
   notebookJson: string;
@@ -16,11 +15,7 @@ export function ResultsView({
   paperTitle,
   onReset,
 }: ResultsViewProps) {
-  const [colabUrl, setColabUrl] = useState<string | null>(null);
-  const [colabLoading, setColabLoading] = useState(false);
-  const [colabError, setColabError] = useState<string | null>(null);
-
-  const filename = `${paperTitle.replace(/[^a-zA-Z0-9\s-]/g, "").replace(/\s+/g, "_")}.ipynb`;
+  const filename = `${paperTitle.replace(/[^a-zA-Z0-9\s-]/g, "").replace(/\s+/g, "_").slice(0, 100)}.ipynb`;
 
   const notebook = JSON.parse(notebookJson);
   const cellCount = notebook.cells?.length || 0;
@@ -37,23 +32,6 @@ export function ResultsView({
     a.download = filename;
     a.click();
     URL.revokeObjectURL(url);
-  }, [notebookJson, filename]);
-
-  const handleOpenInColab = useCallback(async () => {
-    setColabLoading(true);
-    setColabError(null);
-
-    try {
-      const url = await uploadToGist(notebookJson, filename);
-      setColabUrl(url);
-      window.open(url, "_blank");
-    } catch {
-      setColabError(
-        "Could not upload to GitHub Gist. Download the .ipynb file and upload it to Colab manually."
-      );
-    } finally {
-      setColabLoading(false);
-    }
   }, [notebookJson, filename]);
 
   return (
@@ -79,33 +57,15 @@ export function ResultsView({
         </div>
       </div>
 
-      <div className="space-y-3">
-        <Button
-          data-testid="download-button"
-          onClick={handleDownload}
-          className="w-full h-11"
-          size="lg"
-        >
-          <Download className="mr-2 h-4 w-4" />
-          Download .ipynb
-        </Button>
-
-        <Button
-          data-testid="colab-button"
-          onClick={colabUrl ? () => window.open(colabUrl, "_blank") : handleOpenInColab}
-          variant="outline"
-          className="w-full h-11"
-          size="lg"
-          disabled={colabLoading}
-        >
-          <ExternalLink className="mr-2 h-4 w-4" />
-          {colabLoading ? "Uploading..." : "Open in Google Colab"}
-        </Button>
-
-        {colabError && (
-          <p className="text-xs text-muted-foreground">{colabError}</p>
-        )}
-      </div>
+      <Button
+        data-testid="download-button"
+        onClick={handleDownload}
+        className="w-full h-11"
+        size="lg"
+      >
+        <Download className="mr-2 h-4 w-4" />
+        Download .ipynb
+      </Button>
 
       <Button
         data-testid="new-paper-button"

@@ -27,9 +27,10 @@
   - Files: src/lib/output-scanner.ts, src/lib/notebook-assembler.ts, tests/unit/output-scanner.test.ts
   - Completed: 2026-03-26 — Output scanner with 8 dangerous patterns, integrated into notebook assembler. 10 unit tests passing.
 
-- [ ] Task 6: Remove "Open in Colab" feature and clean up gist-uploader (P0)
+- [x] Task 6: Remove "Open in Colab" feature and clean up gist-uploader (P0)
   - Acceptance: Colab button removed from ResultsView. gist-uploader.ts deleted. No references to gist or Colab remain in the codebase. Existing E2E tests updated to not check for colab button. All tests pass.
   - Files: src/components/results-view.tsx, src/lib/gist-uploader.ts (delete), tests/e2e/task8-results.spec.ts
+  - Completed: 2026-03-26 — Removed Colab button, deleted gist-uploader.ts, updated E2E tests. Also added filename truncation (100 chars).
 
 - [ ] Task 7: Harden error responses — no internal details leaked (P1)
   - Acceptance: `/api/parse` catch block returns generic "Failed to parse PDF" on 500 (no `error.message` forwarded). `/api/generate` error events use generic messages. `openai-client.ts` catch-all does not forward raw error messages. Unit test verifies no stack traces or internal paths leak.
