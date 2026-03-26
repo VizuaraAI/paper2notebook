@@ -22,9 +22,10 @@
   - Files: src/lib/prompt-builder.ts, src/lib/content-sanitizer.ts, tests/unit/content-sanitizer.test.ts
   - Completed: 2026-03-26 — Content sanitizer strips injection patterns, role markers, control chars. Prompt uses XML delimiters + anti-injection instructions. 8 unit tests passing.
 
-- [ ] Task 5: Implement output scanning — block dangerous code patterns in generated notebooks (P0)
+- [x] Task 5: Implement output scanning — block dangerous code patterns in generated notebooks (P0)
   - Acceptance: After notebook assembly, code cells are scanned for dangerous patterns: `os.system`, `subprocess`, `eval(`, `exec(`, `__import__`, `requests.post`, `requests.get` to non-standard URLs, `open(` with write mode on system paths, `shutil.rmtree`. Dangerous patterns are commented out with a `# SECURITY: blocked` prefix. Unit tests cover all patterns.
   - Files: src/lib/output-scanner.ts, src/lib/notebook-assembler.ts, tests/unit/output-scanner.test.ts
+  - Completed: 2026-03-26 — Output scanner with 8 dangerous patterns, integrated into notebook assembler. 10 unit tests passing.
 
 - [ ] Task 6: Remove "Open in Colab" feature and clean up gist-uploader (P0)
   - Acceptance: Colab button removed from ResultsView. gist-uploader.ts deleted. No references to gist or Colab remain in the codebase. Existing E2E tests updated to not check for colab button. All tests pass.
