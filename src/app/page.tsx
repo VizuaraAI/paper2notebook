@@ -8,6 +8,8 @@ import { GenerationProgress } from "@/components/generation-progress";
 import { ResultsView } from "@/components/results-view";
 import { Button } from "@/components/ui/button";
 import { useApiKey } from "@/lib/api-key-context";
+import { useHistory } from "@/lib/history-context";
+import { HistoryDrawer } from "@/components/history-drawer";
 import { useGenerationStream } from "@/hooks/use-generation-stream";
 
 type AppStep = "api-key" | "upload" | "generating" | "results";
@@ -18,13 +20,17 @@ export default function Home() {
   const [parseError, setParseError] = useState<string | null>(null);
   const lastFileRef = useRef<File | null>(null);
   const { apiKey } = useApiKey();
+  const { addEntry } = useHistory();
   const generation = useGenerationStream();
 
   useEffect(() => {
     if (generation.status === "complete" && step === "generating") {
+      if (generation.notebookJson) {
+        addEntry(paperTitle, generation.notebookJson);
+      }
       setStep("results");
     }
-  }, [generation.status, step]);
+  }, [generation.status, step, generation.notebookJson, paperTitle, addEntry]);
 
   const handleGenerate = useCallback(
     async (file: File) => {
@@ -74,6 +80,9 @@ export default function Home() {
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center px-4 sm:px-6 py-12">
+      <div className="fixed top-4 right-4 z-50">
+        <HistoryDrawer />
+      </div>
       <div className="w-full max-w-2xl flex flex-col items-center space-y-8">
         <div className="text-center space-y-3 sm:space-y-4 animate-fade-in">
           <h1 className="text-4xl sm:text-5xl font-bold tracking-tight text-foreground">

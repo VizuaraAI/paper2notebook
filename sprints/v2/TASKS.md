@@ -37,9 +37,10 @@
   - Files: src/app/api/parse/route.ts, src/app/api/generate/route.ts, src/lib/openai-client.ts
   - Completed: 2026-03-26 — Generic error messages in all routes and openai-client. 2 unit tests verify no internal details leak.
 
-- [ ] Task 8: Add generation history context and drawer component (P1)
+- [x] Task 8: Add generation history context and drawer component (P1)
   - Acceptance: `HistoryProvider` context stores an array of `{ id, paperTitle, timestamp, notebookJson, cellCount }`. After successful generation, entry is auto-added. `HistoryDrawer` component shows a list of past generations with paper title, timestamp, and cell count. Clicking an entry triggers download of that notebook. Session-scoped only (clears on page refresh). Accessible via a small "History" button in the header area. E2E test verifies history entry appears after generation.
   - Files: src/lib/history-context.tsx, src/components/history-drawer.tsx, src/app/layout.tsx, src/app/page.tsx, tests/e2e/task-history.spec.ts
+  - Completed: 2026-03-26 — HistoryProvider context, HistoryDrawer with Sheet, auto-add on generation, History button in header. 2 E2E tests passing.
 
 - [ ] Task 9: Add JSON.parse error boundary in ResultsView (P1)
   - Acceptance: `JSON.parse(notebookJson)` in ResultsView is wrapped in try/catch. If parsing fails, shows a user-friendly error message with download-raw option instead of white screen crash. Unit or E2E test verifies graceful handling.

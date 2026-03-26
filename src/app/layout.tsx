@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import { cn } from "@/lib/utils";
 import { ApiKeyProvider } from "@/lib/api-key-context";
+import { HistoryProvider } from "@/lib/history-context";
 import "./globals.css";
 
 const inter = Inter({
@@ -28,7 +29,9 @@ export default function RootLayout({
   return (
     <html lang="en" className={cn(inter.variable, jetbrainsMono.variable)}>
       <body className="min-h-screen bg-background font-sans antialiased">
-        <ApiKeyProvider>{children}</ApiKeyProvider>
+        <ApiKeyProvider>
+          <HistoryProvider>{children}</HistoryProvider>
+        </ApiKeyProvider>
       </body>
     </html>
   );
