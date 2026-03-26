@@ -1,9 +1,18 @@
 import { NextRequest, NextResponse } from "next/server";
 import { parsePdf } from "@/lib/pdf-parser";
+import { apiRateLimiter } from "@/lib/rate-limiter";
 
 const MAX_SIZE = 20 * 1024 * 1024;
 
 export async function POST(request: NextRequest) {
+  const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+  if (!apiRateLimiter.check(ip)) {
+    return NextResponse.json(
+      { error: "Too many requests. Please try again later." },
+      { status: 429 }
+    );
+  }
+
   try {
     const formData = await request.formData();
     const file = formData.get("file");

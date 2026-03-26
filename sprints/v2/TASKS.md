@@ -7,9 +7,10 @@
   - Files: next.config.mjs
   - Completed: 2026-03-26 — Added 4 security headers via next.config.mjs headers(). 4 integration tests passing.
 
-- [ ] Task 2: Add rate limiting middleware for API routes (P0)
+- [x] Task 2: Add rate limiting middleware for API routes (P0)
   - Acceptance: Both `/api/parse` and `/api/generate` are rate-limited to 10 requests per minute per IP. Returns 429 with a clear error message when exceeded. Uses an in-memory store (no Redis needed). Integration test verifies 429 response.
   - Files: src/lib/rate-limiter.ts, src/app/api/parse/route.ts, src/app/api/generate/route.ts
+  - Completed: 2026-03-26 — IP-based rate limiter (10 req/min), integrated in both routes. 4 unit + 2 integration tests passing.
 
 - [ ] Task 3: Fix input validation gaps — max lengths, body size, magic bytes (P0)
   - Acceptance: `/api/generate` Zod schema limits `text` to 100,000 chars and `apiKey` to 200 chars. `/api/parse` validates PDF magic bytes (`%PDF-`) in addition to MIME type. Generic error messages on 500s (no internal details leaked). All existing tests still pass.

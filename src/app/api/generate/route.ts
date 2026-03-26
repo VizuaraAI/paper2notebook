@@ -3,6 +3,7 @@ import { z } from "zod";
 import { createOpenAIClient, streamNotebookGeneration } from "@/lib/openai-client";
 import { buildNotebookPrompt } from "@/lib/prompt-builder";
 import { assembleNotebook } from "@/lib/notebook-assembler";
+import { apiRateLimiter } from "@/lib/rate-limiter";
 
 const requestSchema = z.object({
   text: z.string().min(1, "Paper text is required"),
@@ -11,6 +12,13 @@ const requestSchema = z.object({
 });
 
 export async function POST(request: NextRequest) {
+  const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+  if (!apiRateLimiter.check(ip)) {
+    return new Response(
+      JSON.stringify({ error: "Too many requests. Please try again later." }),
+      { status: 429, headers: { "Content-Type": "application/json" } }
+    );
+  }
   const body = await request.json().catch(() => null);
 
   if (!body) {
