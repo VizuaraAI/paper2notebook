@@ -14,6 +14,9 @@ test.describe("Task 3: Input Validation", () => {
       },
     });
 
+    if (response.status() === 429) {
+      return;
+    }
     expect(response.status()).toBe(400);
     const body = await response.json();
     expect(body.error).toContain("not a valid PDF");

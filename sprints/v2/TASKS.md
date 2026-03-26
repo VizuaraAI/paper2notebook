@@ -1,6 +1,6 @@
 # Sprint v2 — Tasks
 
-## Status: In Progress
+## Status: Complete
 
 - [x] Task 1: Add security headers to next.config.mjs (P0)
   - Acceptance: Response headers include X-Content-Type-Options: nosniff, X-Frame-Options: DENY, Referrer-Policy: strict-origin-when-cross-origin, Permissions-Policy disabling camera/mic/geolocation. Verified by unit test or curl check.
@@ -47,6 +47,7 @@
   - Files: src/components/results-view.tsx
   - Completed: 2026-03-26 — parseNotebook with try/catch, error state shows warning + download-raw button. 5 unit tests passing.
 
-- [ ] Task 10: Run full test suite, lint, typecheck, and final security verification (P1)
+- [x] Task 10: Run full test suite, lint, typecheck, and final security verification (P1)
   - Acceptance: All Playwright tests pass (including new security tests). All Vitest unit tests pass. `npx next lint` shows zero warnings. `npx tsc --noEmit` has no errors. Manual verification that security headers are present, rate limiting works, and prompt injection defenses are in place. TASKS.md updated to mark all tasks complete.
   - Files: sprints/v2/TASKS.md
+  - Completed: 2026-03-26 — 34 Playwright tests pass, 44 Vitest tests pass, lint clean, typecheck clean. All 10 tasks complete.
