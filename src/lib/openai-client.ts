@@ -20,7 +20,7 @@ export async function* streamNotebookGeneration(
       ],
       stream: true,
       temperature: 0.3,
-      max_tokens: 16000,
+      max_completion_tokens: 32000,
     });
 
     yield { type: "progress", data: "Identifying key algorithms..." };
@@ -57,8 +57,7 @@ export async function* streamNotebookGeneration(
     } else if (error instanceof OpenAI.APIConnectionError) {
       yield { type: "error", data: "Connection failed. Please check your internet connection." };
     } else {
-      const message = error instanceof Error ? error.message : "Unknown error occurred";
-      yield { type: "error", data: `Generation failed: ${message}` };
+      yield { type: "error", data: "Generation failed. Please try again." };
     }
   }
 }

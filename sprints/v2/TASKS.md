@@ -32,9 +32,10 @@
   - Files: src/components/results-view.tsx, src/lib/gist-uploader.ts (delete), tests/e2e/task8-results.spec.ts
   - Completed: 2026-03-26 — Removed Colab button, deleted gist-uploader.ts, updated E2E tests. Also added filename truncation (100 chars).
 
-- [ ] Task 7: Harden error responses — no internal details leaked (P1)
+- [x] Task 7: Harden error responses — no internal details leaked (P1)
   - Acceptance: `/api/parse` catch block returns generic "Failed to parse PDF" on 500 (no `error.message` forwarded). `/api/generate` error events use generic messages. `openai-client.ts` catch-all does not forward raw error messages. Unit test verifies no stack traces or internal paths leak.
   - Files: src/app/api/parse/route.ts, src/app/api/generate/route.ts, src/lib/openai-client.ts
+  - Completed: 2026-03-26 — Generic error messages in all routes and openai-client. 2 unit tests verify no internal details leak.
 
 - [ ] Task 8: Add generation history context and drawer component (P1)
   - Acceptance: `HistoryProvider` context stores an array of `{ id, paperTitle, timestamp, notebookJson, cellCount }`. After successful generation, entry is auto-added. `HistoryDrawer` component shows a list of past generations with paper title, timestamp, and cell count. Clicking an entry triggers download of that notebook. Session-scoped only (clears on page refresh). Accessible via a small "History" button in the header area. E2E test verifies history entry appears after generation.

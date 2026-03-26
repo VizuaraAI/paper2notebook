@@ -77,11 +77,10 @@ export async function POST(request: NextRequest) {
             );
           }
         }
-      } catch (error) {
-        const message = error instanceof Error ? error.message : "Stream error";
+      } catch {
         controller.enqueue(
           encoder.encode(
-            `data: ${JSON.stringify({ type: "error", message })}\n\n`
+            `data: ${JSON.stringify({ type: "error", message: "An unexpected error occurred. Please try again." })}\n\n`
           )
         );
       } finally {
