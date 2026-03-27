@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useCallback, useEffect, useRef } from "react";
+import Image from "next/image";
 import { AlertCircle, RotateCcw } from "lucide-react";
 import { ApiKeyInput } from "@/components/api-key-input";
 import { PdfUpload } from "@/components/pdf-upload";
@@ -85,12 +86,23 @@ export default function Home() {
       </div>
       <div className="w-full max-w-2xl flex flex-col items-center space-y-8">
         <div className="text-center space-y-3 sm:space-y-4 animate-fade-in">
+          <Image
+            src="/vizlogo.png"
+            alt="Vizuara Logo"
+            width={64}
+            height={64}
+            className="mx-auto"
+            priority
+          />
           <h1 className="text-4xl sm:text-5xl font-bold tracking-tight text-foreground">
             Paper2Notebook
           </h1>
           <p className="text-base sm:text-lg text-muted-foreground max-w-md mx-auto leading-relaxed">
             Transform research papers into production-quality Google Colab
             notebooks.
+          </p>
+          <p className="text-xs text-muted-foreground/50">
+            Built by Vizuara
           </p>
         </div>
 
