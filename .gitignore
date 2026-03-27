@@ -37,3 +37,16 @@ next-env.d.ts
 node_modules/
 .next/
 .env*
+
+# credentials — NEVER commit secrets
+aws_cred.md
+*credentials*
+*secret*
+
+# large test PDFs (keep tests/fixtures/test-paper.pdf)
+NIPS-*.pdf
+tests/screenshots/v3-real-quality/generated-notebook.ipynb
+
+# misc generated dirs
+v3-infra-schematic/
+test-results/

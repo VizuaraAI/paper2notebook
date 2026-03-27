@@ -9,6 +9,22 @@ export default defineConfig({
     baseURL: "http://localhost:3000",
     trace: "off",
   },
+  projects: [
+    {
+      name: "default",
+      testIgnore: "**/v3-real-quality.spec.ts",
+    },
+    {
+      name: "real",
+      testMatch: "**/v3-real-quality.spec.ts",
+      use: {
+        headless: false,
+        launchOptions: {
+          slowMo: 500,
+        },
+      },
+    },
+  ],
   webServer: {
     command: "npm run dev",
     url: "http://localhost:3000",
