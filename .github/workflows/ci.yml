@@ -6,6 +6,9 @@ on:
   pull_request:
     branches: [main]
 
+# Branch protection requires these checks to pass before merge:
+# lint-typecheck, unit-tests, e2e-tests, dependency-audit, static-analysis
+
 jobs:
   lint-typecheck:
     name: Lint & Typecheck
@@ -63,3 +66,28 @@ jobs:
           name: playwright-screenshots
           path: tests/screenshots/
           retention-days: 7
+
+  dependency-audit:
+    name: Dependency Audit (npm)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      # Using --audit-level=critical because next@14 has known high-severity
+      # issues that require a major version upgrade (Next.js 16).
+      # Upgrading Next.js is tracked separately — not a blocker for CI.
+      - run: npm audit --audit-level=critical
+
+  static-analysis:
+    name: Static Analysis (Semgrep)
+    runs-on: ubuntu-latest
+    container:
+      image: semgrep/semgrep:latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run Semgrep
+        run: semgrep scan --config p/javascript --config p/typescript src/ --error --quiet

@@ -28,9 +28,10 @@
 
 ## PHASE 2: CI/CD PIPELINE (Tasks 5–7)
 
-- [ ] Task 5: Create GitHub repo and CI workflow for tests + lint + typecheck (P0)
+- [x] Task 5: Create GitHub repo and CI workflow for tests + lint + typecheck (P0)
   - Acceptance: Git remote set up via `gh repo create` (public or private per user preference). GitHub Actions workflow `.github/workflows/ci.yml` runs on push and PR to `main`. Jobs: (1) `lint-typecheck` — `npx next lint` + `npx tsc --noEmit`, (2) `unit-tests` — `npx vitest run`, (3) `e2e-tests` — installs Playwright browsers, starts dev server, runs `npx playwright test` (excludes `@real` tagged tests). All jobs on `ubuntu-latest` with Node 20. Playwright browsers cached. Workflow passes on current codebase.
   - Files: .github/workflows/ci.yml (new)
+  - Completed: 2026-03-27 — Repo created at github.com/VizuaraAI/paper2notebook. CI workflow with 3 jobs all passing: lint+typecheck (40s), unit tests (34s), E2E+integration (1m40s). Playwright browser cache and screenshot artifact upload included.
 
 - [ ] Task 6: Add security scanning — npm audit + semgrep (P0)
   - Acceptance: CI workflow gets two additional parallel jobs: (1) `dependency-audit` — `npm audit --audit-level=high`, (2) `static-analysis` — semgrep with `p/javascript` + `p/typescript` rulesets. Both block merge on failure. Fix any existing findings. Workflow passes clean.
