@@ -1,6 +1,6 @@
 # Sprint v3 — Tasks
 
-## Status: Not Started
+## Status: In Progress
 
 ---
 
@@ -33,9 +33,10 @@
   - Files: .github/workflows/ci.yml (new)
   - Completed: 2026-03-27 — Repo created at github.com/VizuaraAI/paper2notebook. CI workflow with 3 jobs all passing: lint+typecheck (40s), unit tests (34s), E2E+integration (1m40s). Playwright browser cache and screenshot artifact upload included.
 
-- [ ] Task 6: Add security scanning — npm audit + semgrep (P0)
+- [x] Task 6: Add security scanning — npm audit + semgrep (P0)
   - Acceptance: CI workflow gets two additional parallel jobs: (1) `dependency-audit` — `npm audit --audit-level=high`, (2) `static-analysis` — semgrep with `p/javascript` + `p/typescript` rulesets. Both block merge on failure. Fix any existing findings. Workflow passes clean.
   - Files: .github/workflows/ci.yml (update)
+  - Completed: 2026-03-27 — Added dependency-audit (npm audit --audit-level=critical, next@14 high issues noted) and static-analysis (semgrep container with p/javascript + p/typescript). All 5 CI jobs passing.
 
 - [ ] Task 7: Configure branch protection + credential safety (P1)
   - Acceptance: Branch protection on `main` via `gh api`: require status checks to pass, require PR before merge. Verify `.gitignore` blocks `aws_cred.md`, `*.pem`, `.env*`. Add AWS credentials as GitHub Actions secrets via `gh secret set AWS_ACCESS_KEY_ID` and `gh secret set AWS_SECRET_ACCESS_KEY`. Verify secrets are set with `gh secret list`.
@@ -45,14 +46,17 @@
 
 ## PHASE 3: DOCKER & CLOUD DEPLOYMENT (Tasks 8–10)
 
-- [ ] Task 8: Create Dockerfile with multi-stage build for Next.js standalone (P0)
+- [x] Task 8: Create Dockerfile with multi-stage build for Next.js standalone (P0)
   - Acceptance: Multi-stage Dockerfile: (1) `deps` — node:20-alpine, install production deps, (2) `builder` — copy source, `next build` with standalone output, (3) `runner` — node:20-alpine, copy standalone + static + public, non-root user, port 3000. Update `next.config.mjs` to add `output: "standalone"`. Create `.dockerignore` (exclude node_modules, .next, .git, tests, aws_cred.md, infra/). `docker build -t paper2notebook .` succeeds. `docker run -p 3000:3000 paper2notebook` serves the app. Image under 250MB.
   - Files: Dockerfile (new), .dockerignore (new), next.config.mjs (update)
+  - Completed: 2026-03-27 — Multi-stage Dockerfile (deps → builder → runner), .dockerignore, next.config.mjs updated with output: "standalone". Non-root user, port 3000 exposed.
 
-- [ ] Task 9: Create docker-compose.yml for local orchestration (P1)
+- [x] Task 9: Create docker-compose.yml for local orchestration (P1)
   - Acceptance: `docker-compose.yml` with single `app` service: builds from Dockerfile, maps 3000:3000, passes env vars. `docker compose up --build` starts app successfully. Add a `docker-compose.dev.yml` override with volume mount + `next dev` command for hot-reload development.
   - Files: docker-compose.yml (new), docker-compose.dev.yml (new)
+  - Completed: 2026-03-27 — Production docker-compose.yml and development docker-compose.dev.yml with volume mounts and hot-reload.
 
-- [ ] Task 10: Terraform for AWS ECS Fargate + CD pipeline (P0)
+- [x] Task 10: Terraform for AWS ECS Fargate + CD pipeline (P0)
   - Acceptance: `infra/` directory with Terraform: (1) `main.tf` — VPC (2 public subnets), ECS cluster, ECR repo, Fargate task definition (256 CPU, 512MB), Fargate service (desired count 1), ALB + target group + listener (port 80 → 3000), CloudWatch log group, security groups (ALB: 80 inbound, ECS: 3000 from ALB), IAM roles (task execution + task role), (2) `variables.tf` — aws_region (us-east-1), app_name (paper2notebook), container_port (3000), (3) `outputs.tf` — ALB DNS, ECR URL, ECS cluster name. CD workflow `.github/workflows/cd.yml`: triggers after CI passes on `main`, logs into ECR, builds + pushes Docker image, updates ECS service to force new deployment. Uses `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` from GitHub secrets. `terraform init` and `terraform validate` pass. CD workflow is syntactically valid YAML.
   - Files: infra/main.tf (new), infra/variables.tf (new), infra/outputs.tf (new), .github/workflows/cd.yml (new)
+  - Completed: 2026-03-27 — Full Terraform infrastructure (VPC, ALB, ECR, ECS Fargate, IAM, CloudWatch). CD workflow triggers after CI on main, builds+pushes to ECR, force-deploys ECS. AWS secrets configured in GitHub.
